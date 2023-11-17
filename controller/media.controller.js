@@ -24,7 +24,21 @@ function MediaProcessingVideo(req, res) {
   });
 }
 
+function MediaProcessingFile(req, res) {
+  const fileUrl = `${req.protocol}://${req.get('host')}/files/${
+    req.file.filename
+  }`;
+
+  res.status(200).json({
+    data: fileUrl,
+    message: 'success',
+    status: 200,
+    error: null,
+  });
+}
+
 module.exports = {
   MediaProcessingImage,
   MediaProcessingVideo,
+  MediaProcessingFile,
 };
