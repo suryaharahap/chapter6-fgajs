@@ -11,4 +11,20 @@ function MediaProcessingImage(req, res) {
   });
 }
 
-module.exports = { MediaProcessingImage };
+function MediaProcessingVideo(req, res) {
+  const videoUrl = `${req.protocol}://${req.get('host')}/video/${
+    req.file.filename
+  }`;
+
+  res.status(200).json({
+    data: videoUrl,
+    message: 'success',
+    status: 200,
+    error: null,
+  });
+}
+
+module.exports = {
+  MediaProcessingImage,
+  MediaProcessingVideo,
+};
