@@ -1,4 +1,4 @@
-function MediaProcessing(req, res) {
+function MediaProcessingImage(req, res) {
   const imageUrl = `${req.protocol}://${req.get('host')}/images/${
     req.file.filename
   }`;
@@ -11,4 +11,4 @@ function MediaProcessing(req, res) {
   });
 }
 
-module.exports = { MediaProcessing };
+module.exports = { MediaProcessingImage };
