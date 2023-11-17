@@ -1,3 +1,6 @@
+const qr = require('node-qr-image');
+// 2.54
+
 function MediaProcessingImage(req, res) {
   const imageUrl = `${req.protocol}://${req.get('host')}/images/${
     req.file.filename
@@ -37,8 +40,33 @@ function MediaProcessingFile(req, res) {
   });
 }
 
+function GenerateQRCode(req, res) {
+  const message = req.query.message;
+  try {
+    const pngString = qr.image(message, { type: 'png' });
+    pngString.pipe(
+      require('fs').createWriteStream(`${message.toLowerCase()}.png`)
+    );
+
+    res.status(200).json({
+      data: pngString,
+      message: 'success',
+      status: 200,
+      error: null,
+    });
+  } catch (error) {
+    res.status(500).json({
+      data: null,
+      message: 'Internal server error.',
+      status: 500,
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   MediaProcessingImage,
   MediaProcessingVideo,
   MediaProcessingFile,
+  GenerateQRCode,
 };
